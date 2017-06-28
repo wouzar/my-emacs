@@ -37,15 +37,24 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/")))
 (add-hook 'after-init-hook 'load-package-manager)
 
+;; configure org-refile for viewing heading up to 6th depth
+
+(setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+
+;; use ido completions for org-mode
+
+(ido-mode)
+(setq org-completion-use-ido t)
+
 ;; -----------------------------------------
-;; KEY BINDINGS ----------------------------
+;; REGISTERS -------------------------------
 ;; -----------------------------------------
 
-;; for config file
-(global-set-key (kbd "<f6>") (lambda() (interactive)(find-file "~/.emacs.d/.emacs")))
+;; configs
+(set-register ?e (cons 'file "~/.emacs.d/.emacs"))
 
-;; for notes
-(global-set-key (kbd "<f7>") (lambda() (interactive)(find-file "~/Dropbox/notes/core.org")))
+;; notes
+(set-register ?c (cons 'file "~/Dropbox/notes/core.org"))
 
 ;; -----------------------------------------
 ;; PLUGINS ---------------------------------
