@@ -38,6 +38,16 @@
 (add-hook 'after-init-hook 'load-package-manager)
 
 ;; -----------------------------------------
+;; KEY BINDINGS ----------------------------
+;; -----------------------------------------
+
+;; for config file
+(global-set-key (kbd "<f6>") (lambda() (interactive)(find-file "~/.emacs.d/.emacs")))
+
+;; for notes
+(global-set-key (kbd "<f7>") (lambda() (interactive)(find-file "~/Dropbox/notes/core.org")))
+
+;; -----------------------------------------
 ;; PLUGINS ---------------------------------
 ;; -----------------------------------------
 
