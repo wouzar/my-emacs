@@ -1,8 +1,31 @@
 
-;; Appereance
+;; Personal information
+(setq user-full-name "Victor Moskvych"
+      user-mail-address "wouzar@gmail.com")
+
+;; Load different lisp files for different stuff
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;; sensible-defaults
+(load-file "~/.emacs.d/lisp/sensible-defaults.el")
+(sensible-defaults/use-all-settings)
+(sensible-defaults/use-all-keybindings)
+(sensible-defaults/backup-to-temp-directory)
+
+;; Appereance
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'solarized-dark)
+
+;; bullets mode
+(require 'org-bullets)
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (org-bullets-mode t)))
+
+;; hide leading stars
+(setq org-hide-leading-stars t)
+
+(setq org-ellipsis "⬎")
 
 ;; remove unecessary UI
 (menu-bar-mode -1)
@@ -38,29 +61,69 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/")))
 (add-hook 'after-init-hook 'load-package-manager)
 
-;; configure org-refile for viewing heading up to 6th depth
+;; move lines
 
+(defun move-line-up ()
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2))
+
+(defun move-line-down ()
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1))
+
+(global-set-key (kbd "M-<up>") 'move-line-up)
+(global-set-key (kbd "M-<down>") 'move-line-down)
+
+;; -----------------------------------------
+;; ORG-MODE --------------------------------
+;; -----------------------------------------
+
+;; bindings
+(global-set-key (kbd "C-c c") 'org-capture)
+
+;; default file for notes
+(setq org-default-notes-file "~/Dropbox/org/index.org")
+
+;; configure org-refile for viewing heading up to 6th depth
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 
 ;; use ido completions for org-mode
-
 (ido-mode)
 (setq org-completion-use-ido t)
+
+;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
+(defconst refile-path "~/Dropbox/org/index.org" "File path for all notes")
+(setq org-capture-templates
+      (quote (("t" "todo" entry (file refile-path)
+               "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+              ("r" "respond" entry (file refile-path)
+               "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+              ("n" "note" entry (file refile-path)
+               "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+              ("j" "Journal" entry (file+datetree refile-path)
+               "* %?\n%U\n" :clock-in t :clock-resume t)
+              ("w" "org-protocol" entry (file refile-path)
+               "* TODO Review %c\n%U\n" :immediate-finish t)
+              ("m" "Meeting" entry (file refile-path)
+               "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+              ("p" "Phone call" entry (file refile-path)
+               "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+              ("h" "Habit" entry (file refile-path)
+               "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
 ;; -----------------------------------------
 ;; REGISTERS -------------------------------
 ;; -----------------------------------------
 
-;; configs
+(set-register ?i (cons 'file "~/Dropbox/org/index.org"))
 (set-register ?e (cons 'file "~/.emacs.d/.emacs"))
-
-;; notes
-(set-register ?c (cons 'file "~/Dropbox/notes/core.org"))
 
 ;; -----------------------------------------
 ;; PLUGINS ---------------------------------
 ;; -----------------------------------------
-
 
 ;; wunderlast
 

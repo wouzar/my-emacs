@@ -1,2 +1,6 @@
 auto-save-list
 *.swp
+ido.last
+.#*
+#*
+bookmarks
