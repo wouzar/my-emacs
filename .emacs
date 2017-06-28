@@ -1,7 +1,8 @@
 
 ;; Appereance
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(load-theme 'monokai)
+(load-theme 'solarized-dark)
 
 ;; remove unecessary UI
 (menu-bar-mode -1)
