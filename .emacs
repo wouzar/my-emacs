@@ -55,14 +55,12 @@
 (line-number-mode 1)
 
 ;; Setup the package manager
-(defun load-package-manager ()
-  (package-initialize)
-  (require 'package)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/")))
-(add-hook 'after-init-hook 'load-package-manager)
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(package-initialize)
 
 ;; move lines
-
 (defun move-line-up ()
   (interactive)
   (transpose-lines 1)
@@ -126,18 +124,24 @@
 (set-register ?e (cons 'file "~/.emacs.d/.emacs"))
 
 ;; -----------------------------------------
-;; PLUGINS ---------------------------------
+;; ACE JUMP --------------------------------
 ;; -----------------------------------------
-
-;; --------
-;; ACE JUMP
-;; --------
 (add-to-list 'load-path "~/.emacs.d/lisp/ace-jump-mode.el")
   (require 'ace-jump-mode)
   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
   ;; If you also use viper mode:
   ;; (define-key viper-vi-global-user-map (kbd "SPC") 'ace-jump-mode)
+
+
+;; -----------------------------------------
+;; HASKELL ---------------------------------
+;; -----------------------------------------
+;; NOTE: install haskell-mode, hacktags and hindent packages from MELPA !
+;; also hacktags and hindent from cabal
+
+(add-hook 'haskell-mode-hook #'hindent-mode)
+;; call M-q to reformat current declaration
 
 
 ;; wunderlast
