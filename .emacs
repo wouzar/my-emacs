@@ -14,7 +14,7 @@
 
 ;; Appereance
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(load-theme 'solarized-light)
+(load-theme 'dakrone-light)
 
 ;; bullets mode
 (require 'org-bullets)
