@@ -1,4 +1,5 @@
 
+
 ;; Personal information
 (setq user-full-name "Victor Moskvych"
       user-mail-address "wouzar@gmail.com")
@@ -15,17 +16,6 @@
 ;; Appereance
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'dakrone-light)
-
-;; bullets mode
-(require 'org-bullets)
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (org-bullets-mode t)))
-
-;; hide leading stars
-(setq org-hide-leading-stars t)
-
-(setq org-ellipsis "⬎")
 
 ;; remove unecessary UI
 (menu-bar-mode -1)
